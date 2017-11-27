@@ -28,4 +28,13 @@ it's just easy like editing (and it is) a javascript array!
 
 4. Now upload everything to your favorite host!
 
+**EXTRA:**
+
+
+If you want to costumize the page edit **base.txt** from the root of the project
+
+##tags are replaced by the contents of the file (es: **tag.txt**) placed in **./data/**
+
+%test% is a string that will be replaced with the proper translation from **./data/translation.txt**
+
 *The page can be translated by editing the file **./data/translation.txt***
