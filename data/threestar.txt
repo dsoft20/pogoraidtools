@@ -1,0 +1,1 @@
+var threestar = ["Ninetales","Alakazam","Machamp","Gengar","Scyther","Porygon","Omastar","Egg 3***"];

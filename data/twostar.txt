@@ -1,0 +1,1 @@
+var twostar = ["Sandslash","Tentacruel","Magneton","Cloyster","Marowak","Sableye","Egg 2**"];

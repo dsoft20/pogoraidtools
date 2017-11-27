@@ -1,0 +1,32 @@
+function loadGyms()
+{
+var City1=["Gym1","Gym2","Gym3"];
+var City2=["Gym1","Gym2"];
+var City3=["Gym1","Gym10","Gym11","Gym12","Gym13","Gym14","Gym15","Gym16","Gym17","Gym2","Gym3","Gym4","Gym5","Gym6","Gym7","Gym8","Gym9"];
+
+var ccity = document.getElementById("city");
+var gym = document.getElementById("gym");
+gym.options.length = 0;
+
+if (ccity.value == "City1")
+{
+	for (i =0;i<City1.length;++i)
+	{
+		gym.options[gym.options.length] = new Option(City1[i],City1[i]);
+	}
+}
+if (ccity.value == "City2")
+{
+	for (i =0;i<City2.length;++i)
+	{
+		gym.options[gym.options.length] = new Option(City2[i],City2[i]);
+	}
+}
+if (ccity.value == "City3")
+{
+	for (i =0;i<City3.length;++i)
+	{
+		gym.options[gym.options.length] = new Option(City3[i],City3[i]);
+	}
+}
+}

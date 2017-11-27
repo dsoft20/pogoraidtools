@@ -1,0 +1,404 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>REPORT RAID</title>
+<meta name="theme-color" content="#1c2545">
+
+
+<style type="text/css">
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.select-style {
+    padding: 0;
+    margin: 0;
+	padding: 5px 5px;
+    border: 1px solid #ccc;
+    width: 120px;
+    border-radius: 6px;
+ font-size: 16px;
+    background-color: #fff; 
+}
+
+.select-style select {
+    padding: 5px 8px;
+    width: 130%;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+}
+
+.select-style select:focus {
+    outline: none;
+}
+
+h1 {
+color: white;
+    text-shadow: 2px 2px #000000;
+	  font-size:medium;
+}
+
+
+body {
+background-image: url("./images/background.jpg");
+background-color: rgb(28, 37, 69);
+background-repeat:no-repeat;
+background-position:0px 45px;
+
+background-size:cover;
+}
+
+div.static {
+    position: relative;
+    left: 0px;
+	up: 0px;
+background-color: rgb(28,37,69);
+background-position:0px 0px;
+ margin: 0 auto;
+   min-width:960px;
+    width:100%;
+}
+
+</style>
+</head>
+<body>
+
+
+<div style="text-align: center; text-shadow: 2px 2px #000000;color: white;font-size: 26px;">
+	REPORT RAID
+</div>
+
+<div style="text-align: left;">
+<h1><img src='./images/025.png' height="16" width="16" alt="Pokemon">Pokemon:</h1>
+
+<div style="text-align: center;">
+<select class="select-style" name="raiddiff" id="raiddiff" onchange="changePkm()" style="width:45%;"><option></option></select>
+
+
+<select class="select-style" name="pkm" id="pkm" style="width:45%;"><option></option></select>
+</div>
+
+
+<h1><img src='./images/22.png' height="16" width="16" alt="Location">Where:</h1>
+<div style="text-align: center;">
+<select class="select-style" name="city" id="city" onchange="loadGyms()" style="width:45%;"><option></option></select>
+<select class="select-style" name="gym" id="gym" style="width:45%;"><option></option></select><br><br>
+
+<button class="button" onclick="showPosition()">Show position</button>
+</div>
+
+
+
+<h1><img src='./images/21.png' height="16" width="16" alt="Time">Start hour:</h1>
+<div style="text-align: center;">
+<select class="select-style" name="hour" id="hour" style="width:45%;"><option></option></select>
+<select class="select-style" name="minutes" id="minutes" style="width:45%;" ><option></option></select>
+</div>
+<h1><img src='./images/21.png' height="16" width="16" alt="Time">End hour:</h1>
+<div style="text-align: center;">
+<select class="select-style" name="scadenzaore" id="scadenzaore" onchange="changeMinutes()" style="width:45%;" ><option></option></select>
+<select class="select-style" name="scadenzaminuti" id="scadenzaminuti" style="width:45%;"><option></option></select>
+</div>
+<br>
+
+<br>
+
+
+<div style="text-align: center;">
+<button class="button" onclick="shareOnService('wa')">Share on Whatsapp</button><br><br>
+<button class="button" onclick="shareOnService('tg')">Share on Telegram</button><br>
+</div>
+
+
+</div>
+
+<script type="text/javascript">
+
+function minutesformat(m)
+{
+	var min = "";
+	if (i<2)
+	{
+		min = "0"+ m.toString();
+	}else
+	{
+		min = m.toString();
+	}
+	
+	return min;
+}
+
+var d = new Date();
+var n = d.getHours();
+
+var select = document.getElementById("hour");
+select.options.remove(0);
+
+var minute = document.getElementById("minutes");
+minute.options.remove(0);
+
+var city = document.getElementById("city");
+city.options.remove(0);
+
+var scadore = document.getElementById("scadenzaore");
+scadore.options.remove(0);
+
+var scadminuti = document.getElementById("scadenzaminuti");
+scadminuti.options.remove(0);
+
+
+for (i = n; i < n+3; i++) 
+{ 
+    select.options[select.options.length] = new Option(i, i);
+	scadore.options[scadore.options.length] = new Option(i, i);
+}
+
+for (i = 0; i < 12; i++)
+{ 
+    minute.options[minute.options.length] = new Option(minutesformat(i*5), minutesformat(i*5));
+}
+
+city.options[city.options.length] = new Option("City1","City1");
+city.options[city.options.length] = new Option("City2","City2");
+city.options[city.options.length] = new Option("City3","City3");
+
+
+var raiddiff  = document.getElementById("raiddiff");
+raiddiff.options.remove(0);
+raiddiff.options[raiddiff.options.length] = new Option("*****", "s5");
+raiddiff.options[raiddiff.options.length] = new Option("****", "s4");
+raiddiff.options[raiddiff.options.length] = new Option("***", "s3");
+raiddiff.options[raiddiff.options.length] = new Option("**", "s2");
+raiddiff.options[raiddiff.options.length] = new Option("*", "s1");
+
+changeMinutes();
+loadGyms();
+changePkm();
+
+var gymsarr = ["Gym1,0,0,City1","Gym2,1,1,City1","Gym3,2,2,City1","Gym1,3,3,City2","Gym2,4,4,City2","Gym1,5,5,City3","Gym2,6,6,City3","Gym3,7,7,City3","Gym4,8,8,City3","Gym5,9,9,City3","Gym6,10,10,City3","Gym7,11,11,City3","Gym8,12,12,City3","Gym9,13,13,City3","Gym10,14,14,City3","Gym11,15,15,City3","Gym12,16,16,City3","Gym13,17,17,City3","Gym14,18,18,City3","Gym15,19,19,City3","Gym16,20,20,City3","Gym17,21,21,City3"];
+
+
+function changePkm()
+{
+	var raidiff  = document.getElementById("raiddiff");
+	var pokm = document.getElementById("pkm");
+	pkm.options.length = 0;
+
+var fivestar = ["Raikou"];
+
+var fourstar = ["Nidoqueen","Nidoking","Poliwrath","Victreebel","Golem","Lapras","Snorlax","Tyranitar","Egg 4****"];
+
+var threestar = ["Ninetales","Alakazam","Machamp","Gengar","Scyther","Porygon","Omastar","Egg 3***"];
+
+var twostar = ["Sandslash","Tentacruel","Magneton","Cloyster","Marowak","Sableye","Egg 2**"];
+
+var onestar = ["Magikarp","Ivysaur","Charmeleon","Wartortle","Metapod","Egg 1*"];
+
+
+	if (raidiff.value == "s5")
+	{
+		for (i=0;i<fivestar.length;i++)
+		{
+			pokm.options[pokm.options.length] = new Option(fivestar[i], fivestar[i]);
+		}
+	}
+	
+	if (raidiff.value == "s4")
+	{
+		for (i=0;i<fourstar.length;i++)
+		{
+			pokm.options[pokm.options.length] = new Option(fourstar[i], fourstar[i]);
+		}
+	}
+	
+	if (raidiff.value == "s3")
+	{
+		for (i=0;i<threestar.length;i++)
+		{
+			pokm.options[pokm.options.length] = new Option(threestar[i], threestar[i]);
+		}
+	}
+	
+	if (raidiff.value == "s2")
+	{
+		for (i=0;i<twostar.length;i++)
+		{
+			pokm.options[pokm.options.length] = new Option(twostar[i], twostar[i]);
+		}
+	}
+	
+	if (raidiff.value == "s1")
+	{
+		for (i=0;i<onestar.length;i++)
+		{
+			pokm.options[pokm.options.length] = new Option(onestar[i], onestar[i]);
+		}
+	}
+}
+
+function changeMinutes()
+{
+	var currentdate = new Date();
+	var scadenzaore = document.getElementById("scadenzaore");
+	var scadenzaminuti = document.getElementById("scadenzaminuti");
+	scadminuti.options.length = 0;
+	
+	if (scadenzaore.value <= currentdate.getHours())
+	{
+		for (i =0;i<12;i++)
+		{			
+			if (i*5>currentdate.getMinutes())
+			{
+				scadenzaminuti.options[scadenzaminuti.options.length] = new Option(minutesformat(i*5), minutesformat(i*5));
+			}			
+		}
+	}else
+	{
+		for (i =0;i<12;i++)
+		{		
+			scadenzaminuti.options[scadenzaminuti.options.length] = new Option(minutesformat(i*5), minutesformat(i*5));
+		}
+	}
+	
+	if (scadenzaminuti.options.length == 0)
+	{
+		for (i =0;i<12;i++)
+		{			
+			scadenzaminuti.options[scadenzaminuti.options.length] = new Option(minutesformat(i*5), minutesformat(i*5));
+		}
+		
+		scadenzaore.options.remove(0);
+		
+		changeMinutes();
+	}
+}
+
+function loadGyms()
+{
+var City1=["Gym1","Gym2","Gym3"];
+var City2=["Gym1","Gym2"];
+var City3=["Gym1","Gym10","Gym11","Gym12","Gym13","Gym14","Gym15","Gym16","Gym17","Gym2","Gym3","Gym4","Gym5","Gym6","Gym7","Gym8","Gym9"];
+
+var ccity = document.getElementById("city");
+var gym = document.getElementById("gym");
+gym.options.length = 0;
+
+if (ccity.value == "City1")
+{
+	for (i =0;i<City1.length;++i)
+	{
+		gym.options[gym.options.length] = new Option(City1[i],City1[i]);
+	}
+}
+if (ccity.value == "City2")
+{
+	for (i =0;i<City2.length;++i)
+	{
+		gym.options[gym.options.length] = new Option(City2[i],City2[i]);
+	}
+}
+if (ccity.value == "City3")
+{
+	for (i =0;i<City3.length;++i)
+	{
+		gym.options[gym.options.length] = new Option(City3[i],City3[i]);
+	}
+}
+}
+
+
+function shareOnService(service)
+{
+	var raidiff  = document.getElementById("raiddiff");
+	var poke = document.getElementById("pkm");
+	var gyms = document.getElementById("gym");
+	var scity = document.getElementById("city");
+	var url ="";
+
+	if (service == "wa")
+	{
+		url = "whatsapp://send?text=*"+poke.value+"*-";
+	}
+	
+	if (service == "tg")
+	{
+		url = "tg://msg?text="+poke.value+"-";
+	}
+	
+	var stars = 0;
+	
+
+	if (raidiff.value =="s5"){stars = 5;}
+	if (raidiff.value =="s4"){stars = 4;}
+	if (raidiff.value =="s3"){stars = 3;}
+	if (raidiff.value =="s2"){stars = 2;}
+	if (raidiff.value =="s1"){stars = 1;}
+	
+	for (i =0;i<stars;++i)
+	{
+		url=url+"^";
+	}	
+
+	if (service == "wa")
+	{
+		url= url+"%0A"+city.value +"- *" + gyms.value+"* %0A";
+		url = url + "*Orario inizio:* " +select.value +":"+minute.value+"%0A";
+		url = url+ "*Scadenza:*  " + scadore.value+":"+scadminuti.value+"%0A";
+	}
+	else
+	{
+		url= url+"%0A"+city.value +"- " + gyms.value+"* %0A";
+		url = url + "Orario inizio: " +select.value +":"+minute.value+"%0A";
+		url = url+ "Scadenza:  " + scadore.value+":"+scadminuti.value+"%0A";
+	}
+	
+	url = url+generateGoogleMapsLink(scity.value,gyms.value)+"%0A";
+	url=url+"RSP";	
+	
+	if (service == "tg")
+	{
+		url = url.replace('*','');
+	}
+	
+	window.location.href = url;
+}
+
+function showPosition()
+{
+	var scity = document.getElementById("city");
+	var gyms = document.getElementById("gym");
+	var url = generateGoogleMapsLink(scity.value,gyms.value);
+
+	window.location.href = url;
+}
+
+function generateGoogleMapsLink(pcity, pgym)
+{
+	for (i = 0;i<gymsarr.length;++i)
+	{
+		if (gymsarr[i].toLowerCase().includes(pcity.toLowerCase()) && gymsarr[i].toLowerCase().includes(pgym.toLowerCase()))
+		{
+			var d = gymsarr[i].split(",");
+			var linkgmaps = "https://www.google.com/maps?q=" + d[1]+","+d[2];
+			return linkgmaps;
+		}
+	}		
+
+	return "Nessuna posizione trovata";
+}
+</script>
+
+</body></html>

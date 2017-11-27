@@ -1,0 +1,9 @@
+%report%,REPORT RAID
+%where%,Where:
+%showpos%,Show position
+%start%,Start hour:
+%end%,End hour:
+%swa%,Share on Whatsapp
+%stg%,Share on Telegram
+%bgc%,rgb(28, 37, 69);
+%test%,test

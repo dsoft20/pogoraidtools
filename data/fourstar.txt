@@ -1,0 +1,1 @@
+var fourstar = ["Nidoqueen","Nidoking","Poliwrath","Victreebel","Golem","Lapras","Snorlax","Tyranitar","Egg 4****"];

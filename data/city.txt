@@ -1,0 +1,3 @@
+city.options[city.options.length] = new Option("City1","City1");
+city.options[city.options.length] = new Option("City2","City2");
+city.options[city.options.length] = new Option("City3","City3");

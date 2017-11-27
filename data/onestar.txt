@@ -1,0 +1,1 @@
+var onestar = ["Magikarp","Ivysaur","Charmeleon","Wartortle","Metapod","Egg 1*"];
